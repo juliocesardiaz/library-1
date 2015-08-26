@@ -5,7 +5,6 @@
         private $patron_name;
         private $id;
 
-
         function __construct($patron_name, $id = null)
         {
             $this->patron_name = $patron_name;
@@ -58,7 +57,7 @@
                 WHERE id = {$this->getId()};");
             $this->setPatronName($new_patron_name);
         }
-        
+
 
     }
 ?>

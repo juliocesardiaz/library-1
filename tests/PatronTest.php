@@ -27,35 +27,35 @@
             $test_patron = new Patron($patron_name);
 
             //Act
-            $test_book->setBookTitle("Reamde");
-            $result = $test_book->getBookTitle();
+            $test_patron->setPatronName("Billy Bob");
+            $result = $test_patron->getPatronName();
 
             //Assert
-            $this->assertEquals("Reamde", $result);
+            $this->assertEquals("Billy Bob", $result);
         }
 
         function testGetPatronName()
         {
             //Arrange
-            $book_title = "Ender's Game";
-            $test_book_title = new Book($book_title);
+            $patron_name = "Eduardo";
+            $test_patron = new Patron($patron_name);
 
             //Act
-            $result = $test_book_title->getBookTitle();
+            $result = $test_patron->getPatronName();
 
             //Assert
-            $this->assertEquals($book_title, $result);
+            $this->assertEquals($patron_name, $result);
         }
 
         function testGetId()
         {
             //Arrange
             $id = 1;
-            $book_title = "The Foundation";
-            $test_book = new Book($book_title, $id);
+            $patron_name = "Chichi";
+            $test_patron = new Patron($patron_name, $id);
 
             //Act
-            $result = $test_book->getId();
+            $result = $test_patron->getId();
 
             //Assert
             $this->assertEquals(1, $result);
@@ -64,36 +64,36 @@
         function testSave()
         {
             //Arrange
-            $book_title = "Dune";
+            $patron_name = "Gustav";
             $id = null;
-            $test_book = new Book($book_title, $id);
+            $test_patron = new Patron($patron_name, $id);
 
             //Act
-            $test_book->save();
+            $test_patron->save();
 
             //Assert
-            $result = Book::getAll();
-            $this->assertEquals($test_book, $result[0]);
+            $result = Patron::getAll();
+            $this->assertEquals($test_patron, $result[0]);
         }
 
         function testGetAll()
         {
             //Arrange
-            $book_title = "Snow Crash";
+            $patron_name = "Butterball";
             $id = null;
-            $test_book = new Book($book_title, $id);
-            $test_book->save();
+            $test_patron = new Patron($patron_name, $id);
+            $test_patron->save();
 
-            $book_title2 = "Ready Player One";
+            $patron_name2 = "Lance Armstrang";
             $id2 = null;
-            $test_book2 = new Book($book_title2, $id2);
-            $test_book2->save();
+            $test_patron2 = new Patron($patron_name2, $id2);
+            $test_patron2->save();
 
             //Act
-            $result = Book::getAll();
+            $result = Patron::getAll();
 
             //Assert
-            $this->assertEquals([$test_book, $test_book2], $result);
+            $this->assertEquals([$test_patron, $test_patron2], $result);
         }
     }
 ?>

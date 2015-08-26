@@ -30,7 +30,7 @@
         function save()
         {
             $GLOBALS['DB']->exec("INSERT INTO books (book_title)
-            VALUES ('{$this->getBookTitle()}');");
+                VALUES ('{$this->getBookTitle()}');");
             $this->id = $GLOBALS['DB']->lastInsertId();
         }
 
@@ -47,9 +47,47 @@
             return $books;
         }
 
+        function update($new_book_title)
+        {
+            $GLOBALS['DB']->exec("UPDATE books SET book_title = '{$new_book_title}'
+                WHERE id = {$this->getId()};");
+            $this->setBookTitle($new_book_title);
+        }
+
         static function deleteAll()
         {
           $GLOBALS['DB']->exec("DELETE FROM books;");
+        }
+
+        function delete()
+        {
+            $GLOBALS['DB']->exec("DELETE FROM books WHERE id = {$this->getId()};");
+            $GLOBALS['DB']->exec("DELETE FROM authors_books WHERE book_id = {$this->getId()};");
+        }
+
+        function addAuthor($author)
+        {
+            $GLOBALS['DB']->exec("INSERT INTO authors_books (author_id, book_id)
+                VALUES ({$author->getId()}, {$this->getId()});");
+        }
+
+        function getAuthors()
+        {
+            $found_authors = $GLOBALS['DB']->query(
+            "SELECT authors.* FROM
+            books JOIN authors_books ON (books.id = authors_books.book_id)
+                  JOIN authors ON (authors_books.author_id = authors.id)
+            WHERE books.id = {$this->getId()};"
+            );
+            $authors = array();
+
+            foreach ($found_authors as $author) {
+                $id = $author['id'];
+                $author_name = $author['author_name'];
+                $new_author = new Author($author_name, $id);
+                array_push($authors, $new_author);
+            }
+            return $authors;
         }
 
     }

@@ -24,11 +24,11 @@
         {
             //Arrange
             $author_name = "Neal Stephenson";
-            $test_author_name = new Author($author_name);
+            $test_author = new Author($author_name);
 
             //Act
-            $test_author_name->setAuthorName("Frank Herbert");
-            $result = $test_author_name->getAuthorName();
+            $test_author->setAuthorName("Frank Herbert");
+            $result = $test_author->getAuthorName();
 
             //Assert
             $this->assertEquals("Frank Herbert", $result);
@@ -38,10 +38,10 @@
         {
             //Arrange
             $author_name = "Neal Stephenson";
-            $test_author_name = new Author($author_name);
+            $test_author = new Author($author_name);
 
             //Act
-            $result = $test_author_name->getAuthorName();
+            $result = $test_author->getAuthorName();
 
             //Assert
             $this->assertEquals($author_name, $result);
@@ -52,10 +52,10 @@
             //Arrange
             $id = 1;
             $author_name = "Frank Herbert";
-            $test_author_name = new Author($author_name, $id);
+            $test_author = new Author($author_name, $id);
 
             //Act
-            $result = $test_author_name->getId();
+            $result = $test_author->getId();
 
             //Assert
             $this->assertEquals(1, $result);

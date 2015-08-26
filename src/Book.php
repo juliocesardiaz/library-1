@@ -90,5 +90,19 @@
             return $authors;
         }
 
+        static function find($search_id)
+        {
+            $found_book = null;
+            $books = Book::getAll();
+            foreach($books as $book) {
+                $book_id = $book->getId();
+                if ($search_id == $book_id) {
+                    $found_book = $book;
+                }
+            }
+            return $found_book;
+        }
+
+
     }
 ?>

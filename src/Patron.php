@@ -52,5 +52,13 @@
           $GLOBALS['DB']->exec("DELETE FROM patrons;");
         }
 
+        function update($new_patron_name)
+        {
+            $GLOBALS['DB']->exec("UPDATE patrons SET patron_name = '{$new_patron_name}'
+                WHERE id = {$this->getId()};");
+            $this->setPatronName($new_patron_name);
+        }
+        
+
     }
 ?>

@@ -182,5 +182,24 @@
             //Assert
             $this->assertEquals($result, [$test_author, $test_author2]);
         }
+
+        function testFind()
+        {
+            //Arrange
+            $book_title = "Snow Crash";
+            $id = null;
+            $test_book = new Book($book_title, $id);
+            $test_book->save();
+
+            $book_title2 = "Ready Player One";
+            $id2 = null;
+            $test_book2 = new Book($book_title2, $id2);
+            $test_book2->save();
+
+            //Act
+            $result = Book::find($test_book->getId());
+            //Assert
+            $this->assertEquals($test_book, $result);
+        }
     }
 ?>

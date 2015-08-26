@@ -47,10 +47,55 @@
             return $authors;
         }
 
+        function delete()
+        {
+            $GLOBALS['DB']->exec("DELETE FROM authors WHERE id = {$this->getId()};");
+            $GLOBALS['DB']->exec("DELETE FROM authors_books WHERE author_id = {$this->getId()};");
+        }
+
         static function deleteAll()
         {
           $GLOBALS['DB']->exec("DELETE FROM authors;");
         }
+
+        function addBook($book)
+        {
+            $GLOBALS['DB']->exec("INSERT INTO authors_books (author_id, book_id)
+                VALUES ({$this->getId()}, {$book->getId()});");
+        }
+
+        function getBooks()
+        {
+            $found_books = $GLOBALS['DB']->query(
+            "SELECT books.* FROM
+            authors JOIN authors_books ON (authors.id = authors_books.author_id)
+                  JOIN books ON (authors_books.book_id = books.id)
+            WHERE authors.id = {$this->getId()};"
+            );
+
+            $books = array();
+            foreach ($found_books as $book) {
+                $id = $book['id'];
+                $book_title = $book['book_title'];
+                $new_book = new Book($book_title, $id);
+                array_push($books, $new_book);
+            }
+            return $books;
+        }
+
+        static function find($search_id)
+        {
+            $found_author = null;
+            $authors = Author::getAll();
+            foreach($authors as $author) {
+                $author_id = $author->getId();
+                if ($search_id == $author_id) {
+                    $found_author = $author;
+                }
+            }
+            return $found_author;
+        }
+
 
     }
 ?>

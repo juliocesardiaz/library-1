@@ -1,5 +1,5 @@
 <?php
-
+    
     class Book
     {
         private $book_title;
@@ -99,13 +99,6 @@
                 }
             }
             return $found_book;
-        }
-        
-        function addCopies($number_added)
-        {
-            $copy = Copy::findBook($this->getId());
-            $new_amount = $copy->getAmount() + $number_added;
-            $copy->update($new_amount);
         }
         
         static function searchTitle($search_title)

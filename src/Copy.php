@@ -1,5 +1,5 @@
 <?php 
-	
+
 	class Copy 
 	{
 		private $amount;
@@ -79,7 +79,7 @@
 			$copies = Copy::getAll();
 			foreach($copies as $copy)
 			{
-				$copy_id = $copies->getId();
+				$copy_id = $copy->getId();
 				if($copy_id == $search_id) {
 					$found_copy = $copy;
 				}
@@ -97,6 +97,12 @@
 				}
 			}
 			return $found_copy;
+		}
+		
+		function addCopies($number_added)
+		{
+            $new_amount = $this->getAmount() + $number_added;
+            $this->update($new_amount);
 		}
 	}
 ?>

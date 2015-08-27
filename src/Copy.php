@@ -104,5 +104,6 @@
             $new_amount = $this->getAmount() + $number_added;
             $this->update($new_amount);
 		}
+		
 	}
 ?>

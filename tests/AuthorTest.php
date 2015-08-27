@@ -183,6 +183,21 @@
             //Assert
             $this->assertEquals($test_author, $result);
         }
+        
+        function test_searchAuthor()
+		{
+			$name = "Jerry Garcia";
+			$test_author = new Author($name);
+			$test_author->save();
+			
+			$name2 = "Frank Sinatra";
+			$test_author2 = new Author($name2);
+			$test_author2->save();
+			
+			$result = Author::searchAuthor($test_author->getAuthorName());
+			
+			$this->assertEquals($test_author, $result);
+		}
 
     }
 ?>

@@ -95,6 +95,19 @@
             }
             return $found_author;
         }
+        
+        static function searchAuthor($search_author)
+        {
+            $returned_authors = $GLOBALS['DB']->query("SELECT * FROM authors WHERE author_name = '{$search_author}';");
+            foreach($returned_authors as $author)
+            {
+                if($search_author = $author['author_name']) {
+                    $name = $author['author_name'];
+                    $id = $author['id'];
+                    return new Author($name, $id);
+                }
+            }
+        }
 
 
     }

@@ -49,8 +49,7 @@
 
         function update($new_book_title)
         {
-            $GLOBALS['DB']->exec("UPDATE books SET book_title = '{$new_book_title}'
-                WHERE id = {$this->getId()};");
+            $GLOBALS['DB']->exec("UPDATE books SET book_title = '{$new_book_title}' WHERE id = {$this->getId()};");
             $this->setBookTitle($new_book_title);
         }
 
@@ -73,11 +72,10 @@
 
         function getAuthors()
         {
-            $found_authors = $GLOBALS['DB']->query(
-            "SELECT authors.* FROM
-            books JOIN authors_books ON (books.id = authors_books.book_id)
-                  JOIN authors ON (authors_books.author_id = authors.id)
-            WHERE books.id = {$this->getId()};"
+            $found_authors = $GLOBALS['DB']->query("SELECT authors.* FROM
+                                                    books JOIN authors_books ON (books.id = authors_books.book_id)
+                                                          JOIN authors ON (authors_books.author_id = authors.id)
+                                                    WHERE books.id = {$this->getId()};"
             );
             $authors = array();
 
@@ -101,6 +99,26 @@
                 }
             }
             return $found_book;
+        }
+        
+        function addCopies($number_added)
+        {
+            $copy = Copy::findBook($this->getId());
+            $new_amount = $copy->getAmount() + $number_added;
+            $copy->update($new_amount);
+        }
+        
+        static function searchTitle($search_title)
+        {
+            $returned_books = $GLOBALS['DB']->query("SELECT * FROM books WHERE book_title = '{$search_title}';");
+            $books = array();
+            foreach($returned_books as $book) {
+                $title = $book['book_title'];
+                $id = $book['id'];
+                $new_book = new Book($title, $id);
+                array_push($books, $new_book);
+            }
+            return $books;
         }
 
 

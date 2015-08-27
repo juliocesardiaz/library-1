@@ -201,5 +201,40 @@
             //Assert
             $this->assertEquals($test_book, $result);
         }
+        
+        function test_searchTitle()
+		{
+			$title = "Three Blind Mice";
+			$test_book = new Book($title);
+			$test_book->save();
+			
+			$title2 = "Chicken Dog";
+			$test_book2 = new Book($title2);
+			$test_book2->save();
+			
+			$result = Book::searchTitle($test_book->getBookTitle());
+			
+			$this->assertEquals([$test_book], $result);
+		}
+        
+        function test_addCopy()
+		{
+			$title = "Three Blind Mice";
+			$test_book = new Book($title);
+			$test_book->save();
+			
+			$test_copy = new Copy($amount = 1, $test_book->getId());
+			$test_copy->save();
+			
+			$title2 = "Chicken Dog";
+			$test_book2 = new Book($title2);
+			$test_book2->save();
+			
+			$test_book->addCopies(1);
+			
+			$result = $test_copy->getAmount();
+			
+			$this->assertEquals(2, $result);
+		}
     }
 ?>
